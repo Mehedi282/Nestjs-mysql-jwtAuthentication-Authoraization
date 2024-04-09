@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { UserDetails } from "../../user-details/entities/user-detail.entity";
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -16,5 +17,9 @@ export class User {
 
     @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;
+
+    @OneToOne(() => UserDetails, userDetails => userDetails.user)
+    @JoinColumn()
+    userDetails: UserDetails;
 
 }
