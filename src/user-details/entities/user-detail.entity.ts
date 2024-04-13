@@ -18,8 +18,11 @@ export class UserDetails {
     @Column({ default: '' }) // Set default value to empty string
     education: string;
 
+    @Column()
+    userId: number;
+
     // Establishing one-to-one relationship with User entity
     @OneToOne(() => User, user => user.userDetails)
-    @JoinColumn()
+    @JoinColumn({ name: 'userId' })
     user: User;
 }

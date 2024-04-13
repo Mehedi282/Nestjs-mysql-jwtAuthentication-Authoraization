@@ -16,30 +16,34 @@ export class UserDetailsService {
     private readonly imgbbService: ImgbbService,
     @InjectRepository(User) // Inject UserRepository to fetch user by id
     private readonly userRepository: Repository<User>,
-  ) {}
+  ) { }
 
 
- async create(id: number, userData: UserDetails, image: Buffer): Promise<UserDetails> {
+  async create(id: number, userData: UserDetails, image: Buffer): Promise<UserDetails> {
     try {
       if (image) {
         userData.profilePicture = await this.imgbbService.uploadImage(image);
       }
-  
+
       // Fetch the User object by userId
-      const existedUser = await this.userRepository.findOne({where: {id:id} });
+      const existedUser = await this.userRepository.findOne({ where: { id: id } });
       if (!existedUser) {
         throw new Error(`User with id ${id} not found!!`);
       }
 
       const existingUserDetails = await this.userDetailsRepository.findOne({ where: { user: { id: id } } });
-    
-    if (existingUserDetails) {
-      throw new Error(`Update your profile!!`);
-    }
-  
-     
-      userData.user=existedUser;
-      return this.userDetailsRepository.save(userData);
+
+      if (existingUserDetails) {
+        throw new Error(`Update your profile!!`);
+      }
+
+      userData.userId = existedUser.id;
+      const saveUserDetails = await this.userDetailsRepository.save(userData);
+
+      existedUser.userDetails=saveUserDetails;
+      await this.userRepository.save(existedUser);
+
+      return saveUserDetails
     } catch (error) {
       return error.message
     }
@@ -53,13 +57,13 @@ export class UserDetailsService {
     return this.userDetailsRepository.findOne({ where: { user: { id: id } }, relations: ['user'] });
   }
 
-  
-  async update(id: number, userData: Partial<UserDetails>, image: Buffer ): Promise<UserDetails> {
+
+  async update(id: number, userData: Partial<UserDetails>, image: Buffer): Promise<UserDetails> {
     if (image) {
       userData.profilePicture = await this.imgbbService.uploadImage(image);
     }
     const existingUserDetails = await this.userDetailsRepository.findOne({ where: { user: { id: id } } });
-    
+
     if (!existingUserDetails) {
       throw new NotFoundException(`User details for user with id ${id} not found`);
     }

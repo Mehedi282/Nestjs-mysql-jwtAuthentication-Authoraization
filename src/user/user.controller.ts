@@ -26,13 +26,7 @@ export class UserController {
     return this.userService.findAll();
   }
   
-
-  // @ApiHeader({
-  //   name: 'Authorization',
-  //   description: 'Bearer token',
-  //   required: true,
-  // })
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);

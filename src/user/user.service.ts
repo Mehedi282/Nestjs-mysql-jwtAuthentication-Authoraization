@@ -8,6 +8,7 @@ import { UserAlreadyExistsException } from './userAlreadyExistExeption';
 import * as bcrypt from 'bcrypt';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { UserDetails } from 'src/user-details/entities/user-detail.entity';
 
 
 
@@ -75,7 +76,7 @@ export class UserService {
   }
 
  async findOne(id: number) {
-    return await this.userRepository.findOne({where: {id:id}});
+    return await this.userRepository.findOne({where: {id:id}, relations: ['userDetails', 'posts', 'posts.likes']});
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
