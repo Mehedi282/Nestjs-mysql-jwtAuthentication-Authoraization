@@ -23,6 +23,8 @@ export class UserDetailsService {
     try {
       if (image) {
         userData.profilePicture = await this.imgbbService.uploadImage(image);
+      }else{
+        throw new Error('Image is Required')
       }
 
       // Fetch the User object by userId
@@ -54,7 +56,7 @@ export class UserDetailsService {
   }
 
   findOne(id: number) {
-    return this.userDetailsRepository.findOne({ where: { user: { id: id } }, relations: ['user'] });
+    return this.userDetailsRepository.findOne({ where: { userId: id}, relations: ['user'] });
   }
 
 

@@ -72,7 +72,7 @@ export class UserService {
   }
 
  async findAll() {
-    return await this.userRepository.find();
+    return await this.userRepository.find({relations:['userDetails']});
   }
 
  async findOne(id: number) {

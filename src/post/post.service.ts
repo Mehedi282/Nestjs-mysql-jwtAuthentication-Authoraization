@@ -26,6 +26,7 @@ export class PostService {
         uploadedImageUrls = await this.multipleImageUploadService.uploadImagesToImgBB(photos);
       }
       // Save post with image URLs
+      console.log(typeof(id))
       const user = await this.userRepository.findOne({ where: { id: id } });
       if (!user) {
         throw new Error(`User with id ${id} not found!!`);
@@ -54,7 +55,7 @@ export class PostService {
 
 
   findAll() {
-    return this.postRepository.find({relations:['likes']});
+    return this.postRepository.find({relations:['likes', 'user', 'user.userDetails']});
   }
 
   findOne(id: number) {

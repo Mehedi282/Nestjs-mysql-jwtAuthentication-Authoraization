@@ -18,7 +18,7 @@ import { Like } from './likes/entities/like.entity';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'M@132435m',
+      password: '1234',
       database: 'today',
       entities: [User, UserDetails, Posts, Like],
       synchronize: true,

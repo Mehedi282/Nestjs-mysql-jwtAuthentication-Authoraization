@@ -5,8 +5,8 @@ import { INestApplication } from '@nestjs/common';
 
 export function setupSwagger(app: INestApplication) {
   const options = new DocumentBuilder()
-    .setTitle('Your API Title')
-    .setDescription('Your API Description')
+    .setTitle('Social Media App --Today--')
+    .setDescription('In this app a user can upload their daily activities')
     .setVersion('1.0')
     .addTag('user')
     .build();

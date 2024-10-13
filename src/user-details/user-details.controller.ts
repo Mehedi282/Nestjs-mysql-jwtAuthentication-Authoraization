@@ -4,9 +4,9 @@ import { CreateUserDetailDto } from './dto/create-user-detail.dto';
 import { UpdateUserDetailDto } from './dto/update-user-detail.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserDetails } from './entities/user-detail.entity';
+import { ApiTags } from '@nestjs/swagger';
 
-
-
+@ApiTags('user-details')
 @Controller('user-details')
 export class UserDetailsController {
   constructor(private readonly userDetailsService: UserDetailsService) {}

@@ -14,8 +14,8 @@ export class PostController {
 
   @Post(':id')
   @UseInterceptors(FilesInterceptor('photos'))
-  async createPost(@UploadedFiles() photos: Express.Multer.File[], @Body() postDto: Posts, @Param() id: number) {
-    return this.postService.createPost(photos, postDto, id);
+  async createPost(@UploadedFiles() photos: Express.Multer.File[], @Body() postDto: Posts, @Param('id') id: number) {
+    return this.postService.createPost(photos, postDto, +id);
   }
 
   @Get()
